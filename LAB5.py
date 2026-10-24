@@ -74,43 +74,63 @@ class BinarySearchTree:
             else:
                 self._insert(node.right, value)
     
-
     def isEmpty(self):
-        # YOUR CODE STARTS HERE
-        pass
-
+        return self.root is None
 
     @property
     def getMin(self): 
-        # YOUR CODE STARTS HERE
-        pass
-
+        if self.root is None:
+            return None
+        current = self.root
+        while current.left is not None:
+            current = current.left
+        return current.value
 
     @property
     def getMax(self): 
-        # YOUR CODE STARTS HERE
-        pass
-
-
+        if self.root is None:
+            return None
+        current = self.root
+        while current.right is not None:
+            current = current.right
+        return current.value
+        
     def __contains__(self,value):
-        # YOUR CODE STARTS HERE
-        pass
-
+        current = self.root
+        while current is not None:
+            if value == current.value:
+                return True
+            elif value < current.value:
+                current = current.left
+            else:
+                current = current.right
+        return False
 
     def getHeight(self, node):
-        # YOUR CODE STARTS HERE
-        pass
+        if node is None:
+            return -1
+        left_height = self.getHeight(node.left)
+        right_height = self.getHeight(node.right)
+        if left_height > right_height:
+            return left_height + 1
+        else:
+            return right_height + 1
+        
 
     @property
-    def isBalanced(self):  # Do not modify this method
+    def isBalanced(self):
         return self.isBalanced_helper(self.root)
     
     
     def isBalanced_helper(self, node):
-        # YOUR CODE STARTS HERE
-        pass
-
-
+        if node is None:
+            return True
+        left_h = self.getHeight(node.left)
+        right_h = self.getHeight(node.right)
+        diff = left_h - right_h
+        if diff < -1 or diff > 1:
+            return False
+        return self.isBalanced_helper(node.left) and self.isBalanced_helper(node.right)
 
 def run_tests():
     import doctest
